@@ -1,0 +1,25 @@
+name: Linter Runner
+
+# Run on push and pull request
+on: 
+  - push
+  - pull_request
+
+jobs:
+  eslint:
+    name: Linter Runner
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks out a copy of your repository on the ubuntu-latest machine
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Run Linter
+      - name: Install dependencies
+        run: 
+            npm install eslint
+            npm install eslint-config-airbnb-base
+            npm install eslint-plugin-import 
+      - name: Run linter
+        run: make lint
