@@ -9,4 +9,7 @@ gendiff:
 			node bin/gendiff.js
 
 lint: 
-			npx eslint .		
+			npx eslint .	
+
+lintfix:
+			npx eslint . --fix	
