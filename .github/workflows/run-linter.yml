@@ -22,7 +22,8 @@ jobs:
             npm install eslint-config-airbnb-base
             npm install eslint-plugin-import 
             npm install eslint-plugin-jest
-      - name:
+      - name: Run tests
+        run: 
             make test
       - name: Run linter
         run: make lint
