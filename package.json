@@ -25,6 +25,7 @@
     "gendiff": "bin/gendiff.js"
   },
   "dependencies": {
+    "@types/jest": "^26.0.20",
     "commander": "^7.0.0",
     "eslint": "^7.18.0",
     "eslint-config-airbnb-base": "^14.2.1",
