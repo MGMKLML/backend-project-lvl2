@@ -8,18 +8,35 @@ const __dirname = dirname(__filename);
 
 const getFilePath = (fileName) => path.join(__dirname, '__fixtures__', fileName);
 
-describe('plain json diff', () => {
-  test('two different files', () => {
-    const plainJson1 = getFilePath('plain_1.json');
-    const plainJson2 = getFilePath('plain_2.json');
-    const plainResult = fs.readFileSync(getFilePath('two_plain_jsons_res.txt')).toString();
+let plainTwoFilesResult, plainSameFilesResult;
 
-    expect(genDiff(plainJson1, plainJson2)).toBe(plainResult);
+beforeAll(() => {
+  plainTwoFilesResult = fs.readFileSync(getFilePath('two_plain_files_res.txt')).toString();
+  plainSameFilesResult = fs.readFileSync(getFilePath('same_plain_files_res.txt')).toString();
+});
+
+
+describe('plain json diff', () => {
+  const plainJson1 = getFilePath('plain_1.json');
+  const plainJson2 = getFilePath('plain_2.json');
+
+  test('two different files', () => {
+    expect(genDiff(plainJson1, plainJson2)).toBe(plainTwoFilesResult);
   });
 
   test('same file', () => {
-    const plainJson = getFilePath('plain_1.json');
-    const plainResult = fs.readFileSync(getFilePath('same_plain_json_res.txt')).toString();
-    expect(genDiff(plainJson, plainJson)).toBe(plainResult);
+    expect(genDiff(plainJson1, plainJson1)).toBe(plainSameFilesResult);
+  });
+});
+
+describe('plain yaml diff', () => {
+  const plainYml1 = getFilePath('plain_1.yml');
+    const plainYml2 = getFilePath('plain_2.yml');
+  test('two different files', () => {
+    expect(genDiff(plainYml1, plainYml2)).toBe(plainTwoFilesResult);
+  });
+
+  test('same file', () => {
+    expect(genDiff(plainYml1, plainYml1)).toBe(plainSameFilesResult);
   });
 });
