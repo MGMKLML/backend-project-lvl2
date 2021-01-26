@@ -1,12 +1,7 @@
-import fs from 'fs';
 import path from 'path';
 import process from 'process';
 import getJsonDiff from './src/compare.js';
-
-const getFileContent = (filePath) => {
-  const fileContent = fs.readFileSync(filePath);
-  return JSON.parse(fileContent);
-};
+import getFileContent from './src/parsers.js';
 
 export default (filePath1, filePath2) => {
   const cwd = process.cwd();

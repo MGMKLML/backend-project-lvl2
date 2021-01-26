@@ -5,3 +5,5 @@
 
 ### Videos
 [gendiff: get json difference](https://asciinema.org/a/386322)
+
+[gendiff: json & yaml differences](https://asciinema.org/a/387241)
