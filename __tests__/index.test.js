@@ -14,7 +14,36 @@ let plainSameFilesResult;
 beforeAll(() => {
   plainTwoFilesResult = fs.readFileSync(getFilePath('two_plain_files_res.txt')).toString();
   plainSameFilesResult = fs.readFileSync(getFilePath('same_plain_files_res.txt')).toString();
+  fullSamefilesResult = fs.readFileSync(getFilePath('same_full_files_res.txt')).toString();
+  fullTwoFilesResult = fs.readFileSync(getFilePath('two_full_files_res.txt')).toString();
 });
+
+describe('full files difference', () => {
+  const fullJson1 = getFilePath('full_1.json');
+  const fullJson2 = getFilePath('full_2.json');
+  const fullYml1 = getFilePath('full_1.yml');
+  const fullYml2 = getFilePath('full_1.yml');
+
+  test('same full jsons', () => {
+    expect(genDiff(fullJson1, fullJson1)).toBe(fullSamefilesResult);
+  });
+
+  test('two full jsons', () => {
+    expect(genDiff(fullJson1, fullJson2)).toBe(fullTwoFilesResult);
+  });
+
+  test('same full yamls', () => {
+    expect(genDiff(fullYml1, fullYml1)).toBe(fullSamefilesResult);
+  });
+
+  test('two full yamls', () => {
+    expect(genDiff(fullYml1, fullYml2)).toBe(fullTwoFilesResult);
+  });
+
+  test('full json & yaml', () => {
+    expect(genDiff(fullJson1, fullYml2)).toBe(fullTwoFilesResult);
+  });
+})
 
 describe('plain files difference', () => {
   const plainJson1 = getFilePath('plain_1.json');
