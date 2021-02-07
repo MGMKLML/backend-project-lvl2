@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 const isObject = (value) => value && typeof value === 'object';
 
 const getIndentLevel = (path) => path.split('.').length;
@@ -12,14 +10,14 @@ const stringify = (node, level = 0) => {
   if (isObject(node)) {
     str += '{\n';
     const keys = Object.getOwnPropertyNames(node).sort();
-    for (const key of keys) {
+    keys.forEach((key) => {
       const value = node[key];
       if (isObject(value)) {
         str += `${makeIndent(level + 1)}${key}: ${stringify(value, level + 1)}\n`;
       } else {
         str += `${makeIndent(level + 1)}${key}: ${stringify(value, level)}\n`;
       }
-    }
+    });
     str += `${makeIndent(level)}}`;
   } else {
     str += `${node}`;
@@ -30,7 +28,7 @@ const stringify = (node, level = 0) => {
 
 const print = (tree) => {
   let str = '';
-  for (const element of tree) {
+  tree.forEach((element) => {
     const {
       key, path, type, value, before, after, children,
     } = element;
@@ -57,7 +55,7 @@ const print = (tree) => {
       default:
         break;
     }
-  }
+  });
   return str;
 };
 
