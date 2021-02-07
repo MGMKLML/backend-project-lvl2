@@ -17,7 +17,7 @@ export default (json1, json2) => {
         const after = _.get(json2, path);
         if (hasChildren(before) && hasChildren(after)) {
           return {
-            key, path, type: 'children', children: iter(value, path),
+            key, path, type: 'parent', children: iter(value, path),
           };
         }
         if (before === after) {
