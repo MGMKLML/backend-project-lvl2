@@ -12,13 +12,10 @@ let stylish;
 let plain;
 let stringified;
 
-beforeAll(() => {
-  stylish = fs.readFileSync(getFilePath('stylish.txt')).toString();
-  plain = fs.readFileSync(getFilePath('plain.txt')).toString();
-  stringified = fs.readFileSync(getFilePath('stringified.txt')).toString();
-});
-
 describe('plain files difference, stylish', () => {
+  const stylish = fs.readFileSync(getFilePath('stylish.txt')).toString();
+  const plain = fs.readFileSync(getFilePath('plain.txt')).toString();
+  const stringified = fs.readFileSync(getFilePath('stringified.txt')).toString();
   const beforeJson = getFilePath('before.json');
   const afterJson = getFilePath('after.json');
   const beforeYml = getFilePath('before.yml');
