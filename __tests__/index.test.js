@@ -8,78 +8,55 @@ const __dirname = dirname(__filename);
 
 const getFilePath = (fileName) => path.join(__dirname, '__fixtures__', fileName);
 
-let plainTwoFilesResult;
-let plainSameFilesResult;
-let fullSameFilesResult;
-let fullTwoFilesResult;
-let twoFullPlainStyleResult;
+let stylish;
+let plain;
+let stringified;
 
 beforeAll(() => {
-  plainTwoFilesResult = fs.readFileSync(getFilePath('two_plain_files_res.txt')).toString();
-  plainSameFilesResult = fs.readFileSync(getFilePath('same_plain_files_res.txt')).toString();
-  fullSameFilesResult = fs.readFileSync(getFilePath('same_full_files_res.txt')).toString();
-  fullTwoFilesResult = fs.readFileSync(getFilePath('two_full_files_res.txt')).toString();
-  twoFullPlainStyleResult = fs.readFileSync(getFilePath('two_full_plain_style.txt')).toString();
+  stylish = fs.readFileSync(getFilePath('stylish.txt')).toString();
+  plain = fs.readFileSync(getFilePath('plain.txt')).toString();
+  stringified = fs.readFileSync(getFilePath('stringified.txt')).toString();
 });
 
 describe('plain files difference, stylish', () => {
-  const plainJson1 = getFilePath('plain_1.json');
-  const plainJson2 = getFilePath('plain_2.json');
-  const plainYml1 = getFilePath('plain_1.yml');
-  const plainYml2 = getFilePath('plain_2.yml');
+  const beforeJson = getFilePath('before.json');
+  const afterJson = getFilePath('after.json');
+  const beforeYml = getFilePath('before.yml');
+  const afterYml = getFilePath('after.yml');
 
-  test('same jsons', () => {
-    expect(genDiff(plainJson1, plainJson1)).toBe(plainSameFilesResult);
+  test('json diff in stylish format', () => {
+    expect(genDiff(beforeJson, afterJson, 'stylish')).toBe(stylish);
   });
 
-  test('two jsons', () => {
-    expect(genDiff(plainJson1, plainJson2)).toBe(plainTwoFilesResult);
+  test('json diff in plain format', () => {
+    expect(genDiff(beforeJson, afterJson, 'plain')).toBe(plain);
   });
 
-  test('same yamls', () => {
-    expect(genDiff(plainYml1, plainYml1)).toBe(plainSameFilesResult);
+  test('json diff in stringified format', () => {
+    expect(genDiff(beforeJson, afterJson, 'json')).toBe(stringified);
   });
 
-  test('two yamls', () => {
-    expect(genDiff(plainYml1, plainYml2)).toBe(plainTwoFilesResult);
+  test('yml diff in stylish format', () => {
+    expect(genDiff(beforeYml, afterYml, 'stylish')).toBe(stylish);
   });
 
-  test('json & yaml', () => {
-    expect(genDiff(plainJson1, plainYml2)).toBe(plainTwoFilesResult);
-  });
-});
-
-describe('full files difference', () => {
-  const fullJson1 = getFilePath('full_1.json');
-  const fullJson2 = getFilePath('full_2.json');
-  const fullYml1 = getFilePath('full_1.yml');
-  const fullYml2 = getFilePath('full_2.yml');
-
-  test('same full jsons, stylish', () => {
-    expect(genDiff(fullJson1, fullJson1)).toBe(fullSameFilesResult);
+  test('yml diff in plain format', () => {
+    expect(genDiff(beforeYml, afterYml, 'plain')).toBe(plain);
   });
 
-  test('two full jsons, stylish', () => {
-    expect(genDiff(fullJson1, fullJson2)).toBe(fullTwoFilesResult);
+  test('yml diff in stringified format', () => {
+    expect(genDiff(beforeYml, afterYml, 'json')).toBe(stringified);
   });
 
-  test('same full yamls, stylish', () => {
-    expect(genDiff(fullYml1, fullYml1)).toBe(fullSameFilesResult);
+  test('json <> yml diff in stylish format', () => {
+    expect(genDiff(beforeJson, afterYml, 'stylish')).toBe(stylish);
   });
 
-  test('two full yamls, stylish', () => {
-    expect(genDiff(fullYml1, fullYml2)).toBe(fullTwoFilesResult);
+  test('json <> yml diff in plain format', () => {
+    expect(genDiff(beforeJson, afterYml, 'plain')).toBe(plain);
   });
 
-  test('full json & yaml, stylish', () => {
-    expect(genDiff(fullJson1, fullYml2)).toBe(fullTwoFilesResult);
-  });
-
-  test('two full jsons, plain', () => {
-    expect(genDiff(fullJson1, fullJson2, 'plain')).toBe(twoFullPlainStyleResult);
-  });
-
-  test('full json & yaml, plain', () => {
-    expect(genDiff(fullJson1, fullYml2, 'plain')).toBe(twoFullPlainStyleResult);
+  test('json <> yml diff in stringified format', () => {
+    expect(genDiff(beforeJson, afterYml, 'json')).toBe(stringified);
   });
 });
