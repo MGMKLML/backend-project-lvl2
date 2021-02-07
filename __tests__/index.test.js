@@ -45,7 +45,7 @@ describe('full files difference', () => {
   test('full json & yaml', () => {
     expect(genDiff(fullJson1, fullYml2)).toBe(fullTwoFilesResult);
   });
-})
+});
 
 describe('plain files difference', () => {
   const plainJson1 = getFilePath('plain_1.json');

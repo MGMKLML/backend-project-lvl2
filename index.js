@@ -11,6 +11,6 @@ export default (filePath1, filePath2, format) => {
   const jsonData1 = getFileContent(fullPath1);
   const jsonData2 = getFileContent(fullPath2);
   const diff = getJsonDiff(jsonData1, jsonData2);
-  const formatted = print(diff);
+  const formatted = print(diff, format);
   return formatted;
 };
