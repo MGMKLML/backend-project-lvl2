@@ -11,3 +11,5 @@
 [gendiff: full (nested) json & yaml diff in stylish format](https://asciinema.org/a/389592)
 
 [gendiff: full (nested) json & yaml diff in plain format](https://asciinema.org/a/389690)
+
+[gendiff: full (nested) json & yaml diff in json format](https://asciinema.org/a/389735)
