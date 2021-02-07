@@ -8,4 +8,6 @@
 
 [gendiff: json & yaml differences](https://asciinema.org/a/387241)
 
-[gendiff: full (nested) json & yaml differences](https://asciinema.org/a/389592)
+[gendiff: full (nested) json & yaml diff in stylish format](https://asciinema.org/a/389592)
+
+[gendiff: full (nested) json & yaml diff in plain format](https://asciinema.org/a/389690)
