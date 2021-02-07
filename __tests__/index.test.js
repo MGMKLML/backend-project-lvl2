@@ -8,10 +8,6 @@ const __dirname = dirname(__filename);
 
 const getFilePath = (fileName) => path.join(__dirname, '__fixtures__', fileName);
 
-let stylish;
-let plain;
-let stringified;
-
 describe('plain files difference, stylish', () => {
   const stylish = fs.readFileSync(getFilePath('stylish.txt')).toString();
   const plain = fs.readFileSync(getFilePath('plain.txt')).toString();
