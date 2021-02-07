@@ -4,7 +4,7 @@ import getJsonDiff from './src/compare.js';
 import getFileContent from './src/parsers.js';
 import print from './src/formatters/index.js';
 
-export default (filePath1, filePath2, format) => {
+export default (filePath1, filePath2, format = 'stylish') => {
   const cwd = process.cwd();
   const fullPath1 = path.resolve(cwd, filePath1);
   const fullPath2 = path.resolve(cwd, filePath2);
