@@ -2,6 +2,7 @@ import path from 'path';
 import process from 'process';
 import getJsonDiff from './src/compare.js';
 import getFileContent from './src/parsers.js';
+import format from './src/formatters/stylish.js';
 
 export default (filePath1, filePath2) => {
   const cwd = process.cwd();
@@ -10,5 +11,6 @@ export default (filePath1, filePath2) => {
   const jsonData1 = getFileContent(fullPath1);
   const jsonData2 = getFileContent(fullPath2);
   const diff = getJsonDiff(jsonData1, jsonData2);
-  return diff;
+  const formatted = format(diff);
+  return formatted;
 };

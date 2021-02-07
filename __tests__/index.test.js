@@ -10,11 +10,13 @@ const getFilePath = (fileName) => path.join(__dirname, '__fixtures__', fileName)
 
 let plainTwoFilesResult;
 let plainSameFilesResult;
+let fullSameFilesResult;
+let fullTwoFilesResult;
 
 beforeAll(() => {
   plainTwoFilesResult = fs.readFileSync(getFilePath('two_plain_files_res.txt')).toString();
   plainSameFilesResult = fs.readFileSync(getFilePath('same_plain_files_res.txt')).toString();
-  fullSamefilesResult = fs.readFileSync(getFilePath('same_full_files_res.txt')).toString();
+  fullSameFilesResult = fs.readFileSync(getFilePath('same_full_files_res.txt')).toString();
   fullTwoFilesResult = fs.readFileSync(getFilePath('two_full_files_res.txt')).toString();
 });
 
@@ -22,10 +24,10 @@ describe('full files difference', () => {
   const fullJson1 = getFilePath('full_1.json');
   const fullJson2 = getFilePath('full_2.json');
   const fullYml1 = getFilePath('full_1.yml');
-  const fullYml2 = getFilePath('full_1.yml');
+  const fullYml2 = getFilePath('full_2.yml');
 
   test('same full jsons', () => {
-    expect(genDiff(fullJson1, fullJson1)).toBe(fullSamefilesResult);
+    expect(genDiff(fullJson1, fullJson1)).toBe(fullSameFilesResult);
   });
 
   test('two full jsons', () => {
@@ -33,7 +35,7 @@ describe('full files difference', () => {
   });
 
   test('same full yamls', () => {
-    expect(genDiff(fullYml1, fullYml1)).toBe(fullSamefilesResult);
+    expect(genDiff(fullYml1, fullYml1)).toBe(fullSameFilesResult);
   });
 
   test('two full yamls', () => {
