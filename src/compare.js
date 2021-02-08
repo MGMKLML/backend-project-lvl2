@@ -4,7 +4,7 @@ const joinKeys = (prev, curr) => (prev === '' ? curr : `${prev}.${curr}`);
 
 const hasChildren = (value) => value && typeof value === 'object' && !Array.isArray(value);
 
-const getChildren = (node) => Object.getOwnPropertyNames(node).sort();
+const getChildren = (node) => Object.keys(node).sort();
 
 export default (json1, json2) => {
   const iter = (node, ancestry) => {

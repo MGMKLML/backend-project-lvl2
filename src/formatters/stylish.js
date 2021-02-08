@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const isObject = (value) => value && typeof value === 'object';
 
 const getIndentLevel = (path) => path.split('.').length;
@@ -5,58 +7,49 @@ const getIndentLevel = (path) => path.split('.').length;
 const makeIndent = (level, shift = 0) => ' '.repeat(level * 4 - shift);
 
 const stringify = (node, level = 0) => {
-  let str = '';
-
   if (isObject(node)) {
-    str = `${str}{\n`;
-    const keys = Object.getOwnPropertyNames(node).sort();
-    keys.forEach((key) => {
+    const beginning = '{\n';
+    const keys = Object.keys(node).sort();
+    const printTree = keys.map((key) => {
       const value = node[key];
       if (isObject(value)) {
-        str = `${str}${makeIndent(level + 1)}${key}: ${stringify(value, level + 1)}\n`;
-      } else {
-        str = `${str}${makeIndent(level + 1)}${key}: ${stringify(value, level)}\n`;
+        return `${makeIndent(level + 1)}${key}: ${stringify(value, level + 1)}`;
       }
-    });
-    str = `${str}${makeIndent(level)}}`;
-  } else {
-    str = `${str}${node}`;
+      return `${makeIndent(level + 1)}${key}: ${stringify(value, level)}`;
+    }).join('\n');
+    const ending = `\n${makeIndent(level)}}`;
+    return beginning.concat(printTree, ending);
   }
 
-  return str;
+  return `${node}`;
 };
 
-const print = (tree) => {
-  let str = '';
-  tree.forEach((element) => {
-    const {
-      key, path, type, value, before, after, children,
-    } = element;
-    const depth = getIndentLevel(path);
-    switch (type) {
-      case 'parent':
-        str = `${str}${makeIndent(depth)}${key}: {\n`;
-        str = `${str}${print(children)}`;
-        str = `${str}${makeIndent(depth)}}\n`;
-        break;
-      case 'same':
-        str = `${str}${makeIndent(depth, 2)}  ${key}: ${stringify(value, depth)}\n`;
-        break;
-      case 'changed':
-        str = `${str}${makeIndent(depth, 2)}- ${key}: ${stringify(before, depth)}\n`;
-        str = `${str}${makeIndent(depth, 2)}+ ${key}: ${stringify(after, depth)}\n`;
-        break;
-      case 'removed':
-        str = `${str}${makeIndent(depth, 2)}- ${key}: ${stringify(value, depth)}\n`;
-        break;
-      case 'added':
-        str = `${str}${makeIndent(depth, 2)}+ ${key}: ${stringify(value, depth)}\n`;
-        break;
-      default:
-        break;
-    }
-  });
-  return str;
-};
+const print = (tree) => _.flatMapDeep(tree, (element) => {
+  const {
+    key, path, type, value, before, after, children,
+  } = element;
+  const depth = getIndentLevel(path);
+  switch (type) {
+    case 'parent':
+      return [
+        `${makeIndent(depth)}${key}: {`,
+        print(children),
+        `${makeIndent(depth)}}`,
+      ];
+    case 'same':
+      return `${makeIndent(depth, 2)}  ${key}: ${stringify(value, depth)}`;
+    case 'changed':
+      return [
+        `${makeIndent(depth, 2)}- ${key}: ${stringify(before, depth)}`,
+        `${makeIndent(depth, 2)}+ ${key}: ${stringify(after, depth)}`,
+      ];
+    case 'removed':
+      return `${makeIndent(depth, 2)}- ${key}: ${stringify(value, depth)}`;
+    case 'added':
+      return `${makeIndent(depth, 2)}+ ${key}: ${stringify(value, depth)}`;
+    default:
+      return null;
+  }
+});
 
-export default (tree) => `{\n${print(tree)}}`;
+export default (tree) => `{\n${print(tree).join('\n')}\n}`;
