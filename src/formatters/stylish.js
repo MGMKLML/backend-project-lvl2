@@ -9,7 +9,7 @@ const makeIndent = (level, shift = 0) => ' '.repeat(level * 4 - shift);
 const stringify = (node, level = 0) => {
   if (isObject(node)) {
     const beginning = '{\n';
-    const keys = Object.keys(node).sort();
+    const keys = [...Object.keys(node)].sort();
     const printTree = keys.map((key) => {
       const value = node[key];
       if (isObject(value)) {
